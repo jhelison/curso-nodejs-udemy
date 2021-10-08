@@ -35,6 +35,8 @@ class UpdateUserAvatarService {
             }
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         user.avatar = avatarFilename
         await userRepository.save(user)
 
