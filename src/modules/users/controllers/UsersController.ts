@@ -1,4 +1,4 @@
-import { Request, response, Response } from 'express'
+import { Request, Response } from 'express'
 import CreateUserService from '../services/CreateUserService'
 import ListUsersService from '../services/ListUsersService'
 
@@ -25,7 +25,7 @@ class UsersController {
             password,
         })
 
-        return response.json(user)
+        return reponse.json(user)
     }
 }
 
