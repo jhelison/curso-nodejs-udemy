@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import express, { Request, Response } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors'
 import cors from 'cors'
 import { errors } from 'celebrate'
@@ -16,19 +16,27 @@ app.use(routes)
 
 app.use(errors())
 
-app.use((error: Error, request: Request, response: Response) => {
-    if (error instanceof AppError) {
-        return response.status(error.statusCode).json({
-            status: 'error',
-            message: error.message,
-        })
-    }
+app.use(
+    (
+        error: Error,
+        request: Request,
+        response: Response,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        next: NextFunction,
+    ) => {
+        if (error instanceof AppError) {
+            return response.status(error.statusCode).json({
+                status: 'error',
+                message: error.message,
+            })
+        }
 
-    return response.json({
-        status: 'error',
-        message: 'Internal server error',
-    })
-})
+        return response.json({
+            status: 'error',
+            message: 'Internal server error',
+        })
+    },
+)
 
 app.listen(3333, () => {
     console.log('Server is running on port 3333!')
